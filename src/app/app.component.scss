@@ -1,0 +1,102 @@
+/* ================================
+   🔹 ESTRUCTURA PRINCIPAL DEL LAYOUT
+   ================================ */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+/* Sidebar fijo a la izquierda */
+app-sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #f8fafc;
+  border-right: 1px solid #e5e7eb;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* Contenido principal a la derecha */
+.main-content {
+  margin-left: 250px; /* igual al ancho del sidebar */
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 250px);
+  min-height: 100vh;
+}
+
+/* Navbar superior */
+app-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.8rem 1.2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Contenedor del contenido dinámico */
+.content-wrapper {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  overflow-y: auto;
+  background-color: #f9fafb;
+}
+
+/* Footer */
+app-footer {
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  padding: 0.8rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* ================================
+   🔹 ESTILO DEL SIDEBAR
+   ================================ */
+.sidebar {
+  padding: 1.5rem;
+
+  .sidebar-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+
+    .icon-home {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .sidebar-menu {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 0.8rem 0;
+
+      a {
+        text-decoration: none;
+        color: #111827;
+        font-weight: 500;
+        transition: color 0.2s ease-in-out;
+
+        &:hover {
+          color: #2563eb;
+        }
+
+        &.active {
+          color: #2563eb;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

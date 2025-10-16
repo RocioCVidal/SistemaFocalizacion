@@ -1,0 +1,17 @@
+.titulo-principal {
+    // 1. Apariencia básica
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+
+    // 2. Centrado Horizontal CLAVE (sin usar un contenedor)
+    // Se establece un ancho para que el margen 'auto' pueda funcionar.
+    width: fit-content; // Permite que el ancho se ajuste al contenido (la forma moderna)
+    // Opcional: width: 300px; // Si prefieres un ancho fijo
+
+    display: block; // Asegura que se comporte como un bloque (por si acaso)
+    margin-left: auto; // Empuja el margen izquierdo automáticamente
+    margin-right: auto; // Empuja el margen derecho automáticamente
+    // Simplificado a: margin: 0 auto 20px auto; // (arriba | derecha | abajo | izquierda)
+}

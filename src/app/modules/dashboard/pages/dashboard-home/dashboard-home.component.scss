@@ -1,0 +1,216 @@
+
+/* ================== FILTROS ================== */
+.filters {
+  background: #fff;
+  border-radius: 12px;
+
+  h6 {
+    font-weight: 600;
+    color: #1f2937;
+  }
+}
+
+.filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  justify-content: flex-start;
+}
+
+/* Campos de formulario */
+.form-control,
+.form-select {
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+  padding: 0.35rem 0.75rem;
+  transition: all 0.2s ease-in-out;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.2);
+  }
+}
+
+/* Filtro de fecha */
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  input[type='date'] {
+    width: 200px;
+    height: 40px;
+    padding-right: 0.4rem;
+
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      filter: invert(25%) sepia(100%) saturate(300%) hue-rotate(200deg);
+      margin-right: 0.3rem;
+    }
+  }
+
+  i {
+    font-size: 1.2rem;
+    color: #0d6efd;
+  }
+}
+
+/* ============  INDICADORES KPI ===================== */
+.kpi-section {
+  margin-top: 2rem;
+
+  h6 {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 1.2rem;
+  }
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+.kpi-card {
+  background: #fff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  h5 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.3rem;
+  }
+
+  h3 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 0.3rem;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Colores de KPI */
+.kpi-card.total h3 { color: #2563eb; }
+.kpi-card.pobre-extremo h3 { color: #dc2626; }
+.kpi-card.pobre h3 { color: #f59e0b; }
+.kpi-card.no-pobre h3 { color: #16a34a; }
+
+/* ==========================
+   LOADING / SPINNER
+   ========================== */
+.loading {
+  text-align: center;
+
+  .spinner-border {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+/* ================ GRÁFICOS ================== */
+.charts-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.charts-row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1.5rem;
+}
+
+/* Tarjeta genérica de gráfico */
+.chart-card {
+  background: #fff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  flex: 1 1 380px;
+  max-width: 500px;
+
+  canvas {
+    width: 100% !important;
+    height: 320px !important;
+  }
+}
+
+/* Gráfico inferior centrado (Programas Sociales) */
+.chart-programas {
+  width: 85%;
+  max-width: 900px;
+  margin-top: 1rem;
+  align-self: center;
+
+  canvas {
+    width: 100% !important;
+    height: 280px !important;
+  }
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+@media (max-width: 992px) {
+  .filters-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-control,
+  .form-select,
+  .filter input[type='date'] {
+    width: 100%;
+  }
+
+  .kpi-card h3 {
+    font-size: 1.4rem;
+  }
+
+  .charts-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chart-card {
+    max-width: 100%;
+  }
+
+  .chart-programas {
+    width: 100%;
+    max-width: 100%;
+
+    canvas {
+      height: 240px !important;
+    }
+  }
+}
