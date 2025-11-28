@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Ficha } from '../../../../services/fichas.service';
 
 @Component({
   selector: 'app-subir-archivo-home',
@@ -6,64 +7,38 @@ import { Component } from '@angular/core';
   styleUrls: ['./subir-archivo-home.component.scss']
 })
 export class SubirArchivoHomeComponent {
-  /** Archivo seleccionado o arrastrado */
-  archivo: File | null = null;
 
-  /** Campos manuales */
-  fsu = '';
-  d100 = '';
-  clasificacion = 'No Pobre';
+  // Fase del proceso
+  faseActual: number = 1; 
+  // 1 = subir archivo
+  // 2 = completar fichas
+  // 3 = finalizar proceso
 
-  /** Mensaje informativo mostrado en pantalla */
-  mensaje = '';
+  // Datos recibidos tras procesar el archivo
+  fichas: Ficha[] = [];
+  loteId: string = '';  // lo usaremos cuando integremos backend
 
-  /** Maneja la selección manual de un archivo desde el input */
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.archivo = input.files[0];
-      this.mensaje = '';
-    }
+  constructor() {}
+
+  // =============================
+  // MÉTODOS PARA CAMBIO DE FASES
+  // =============================
+
+  irAFase2(resultado: { fichas: Ficha[], loteId: string }) {
+    this.fichas = resultado.fichas;
+    this.loteId = resultado.loteId;
+    this.faseActual = 2;
   }
 
-  /**
-   * Permite arrastrar un archivo al área designada
-   */
-  onDrop(event: DragEvent): void {
-    event.preventDefault();
-    const files = event.dataTransfer?.files;
-    if (files && files.length > 0) {
-      this.archivo = files[0];
-      this.mensaje = `Archivo "${this.archivo.name}" seleccionado correctamente.`;
-    }
+  irAFase3() {
+    this.faseActual = 3;
   }
 
-  /**
-   * Evita el comportamiento por defecto del navegador al arrastrar
-   */
-  onDragOver(event: DragEvent): void {
-    event.preventDefault();
+  reiniciarProceso() {
+  this.faseActual = 1;     // volvemos al inicio
+  this.fichas = [];        // vaciar fichas
+  this.loteId = '';        // limpiar lote
   }
 
-  /**
-   * Guarda los datos temporalmente (simulación)
-   */
-  guardarBorrador(): void {
-    this.mensaje = 'Borrador guardado temporalmente.';
-  }
 
-  /**
-   * Procesa el archivo seleccionado (simulación con retardo)
-   */
-  procesarArchivo(): void {
-    if (!this.archivo) {
-      this.mensaje = 'Debe seleccionar o arrastrar un archivo .dat antes de continuar.';
-      return;
-    }
-
-    this.mensaje = 'Procesando archivo...';
-    setTimeout(() => {
-      this.mensaje = `Archivo "${this.archivo?.name}" importado y procesado correctamente.`;
-    }, 1500);
-  }
 }

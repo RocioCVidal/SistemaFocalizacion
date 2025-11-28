@@ -1,0 +1,42 @@
+<div class="fase1-container">
+
+  <h3 class="titulo">Subir Archivo .DAT</h3>
+
+  <div class="drop-zone">
+
+    <!-- BOTÓN PARA SELECCIONAR ARCHIVO -->
+    <label class="btn-select">
+      Seleccionar Archivo .DAT
+      <input 
+        #fileInput
+        type="file" 
+        hidden 
+        accept=".dat" 
+        (change)="onFileSelected($event)">
+    </label>
+
+    <!-- SI HAY ARCHIVO -->
+    <p *ngIf="archivo" class="archivo-info">
+      📁 {{ archivo.name }}
+      <button class="btn-delete" (click)="eliminarArchivo()">Eliminar</button>
+    </p>
+
+    <!-- SI NO HAY ARCHIVO -->
+    <p *ngIf="!archivo">Arrastra o selecciona un archivo .DAT</p>
+
+  </div>
+
+  <!-- MENSAJE -->
+  <p class="mensaje">{{ mensaje }}</p>
+
+  <!-- BOTÓN PROCESAR -->
+  <button 
+    class="btn-primary"
+    [disabled]="!archivo || cargando"
+    (click)="procesarArchivo()">
+
+    <span *ngIf="!cargando">Guardar y Procesar</span>
+    <span *ngIf="cargando">Procesando...</span>
+  </button>
+
+</div>

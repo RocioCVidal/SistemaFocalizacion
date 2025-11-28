@@ -1,0 +1,45 @@
+.contenedor-final {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.caja-info {
+  background: #f9fafc;
+  border: 1px solid #dcdcdc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.lote {
+  background: #eaf3ff;
+  padding: .4rem .8rem;
+  display: inline-block;
+ 	border-radius: 6px;
+  font-weight: bold;
+  color: #0056b3;
+}
+
+.btn-finalizar {
+  background: #0069d9;
+  color: #fff;
+  padding: .8rem 1.6rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-finalizar:disabled {
+  background: #9cbbe3;
+  cursor: not-allowed;
+}
+
+.mensaje {
+  margin-top: 1rem;
+  color: #28a745;
+  font-weight: bold;
+}

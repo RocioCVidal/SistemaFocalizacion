@@ -1,0 +1,55 @@
+.fase1-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+}
+
+.titulo {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.drop-zone {
+  border: 2px dashed #b5b5b5;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.btn-select {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-delete {
+  background: transparent;
+  color: #dc3545;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.mensaje {
+  margin-top: .5rem;
+  font-style: italic;
+}

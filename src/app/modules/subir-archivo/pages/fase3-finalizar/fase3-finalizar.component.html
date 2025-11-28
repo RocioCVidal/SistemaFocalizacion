@@ -1,0 +1,29 @@
+<div class="contenedor-final">
+
+  <h3>Finalizar Registro</h3>
+
+  <div class="caja-info">
+    <p><strong>✔ Todas las fichas han sido completadas correctamente.</strong></p>
+
+    <p><strong>ID del lote procesado:</strong></p>
+    <p class="lote">{{ loteId }}</p>
+
+    <p>Para concluir el proceso, presiona el botón inferior.</p>
+  </div>
+
+  <!-- BOTÓN FINALIZAR -->
+  <button 
+    class="btn-finalizar"
+    [disabled]="cargando || finalizado"
+    (click)="finalizarProceso()">
+
+    <span *ngIf="!cargando && !finalizado">Finalizar Registro</span>
+    <span *ngIf="cargando">Registrando...</span>
+    <span *ngIf="finalizado">Completado ✔</span>
+
+  </button>
+
+  <!-- MENSAJE -->
+  <p class="mensaje" *ngIf="mensaje">{{ mensaje }}</p>
+
+</div>

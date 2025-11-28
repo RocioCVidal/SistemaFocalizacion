@@ -1,0 +1,72 @@
+<div class="contenedor-fase2">
+
+  <!-- Título -->
+  <h3>Completar Información de Fichas</h3>
+  <p class="sub">
+    Ficha {{ indiceActual + 1 }} de {{ fichas.length }}
+  </p>
+
+  <!-- ======== DATOS DE LA FICHA ======== -->
+  <div class="ficha-card">
+
+    <h4>Información de la Ficha</h4>
+
+    <div class="row">
+      <div><strong>FSU:</strong> {{ fichaActual.numero_fsu }}</div>
+      <div><strong>Departamento:</strong> {{ fichaActual.departamento }}</div>
+      <div><strong>Provincia:</strong> {{ fichaActual.provincia }}</div>
+      <div><strong>Distrito:</strong> {{ fichaActual.distrito }}</div>
+    </div>
+
+    <div class="row">
+      <div><strong>Dirección:</strong> {{ fichaActual.tipo_via }} {{ fichaActual.nombre_via }} {{ fichaActual.num_puerta }}</div>
+    </div>
+
+    <div class="row">
+      <div><strong>Informante:</strong> {{ fichaActual.informante }}</div>
+      <div><strong>Personas:</strong> {{ fichaActual.total_personas }}</div>
+      <div><strong>Hombres:</strong> {{ fichaActual.total_hombres }}</div>
+      <div><strong>Mujeres:</strong> {{ fichaActual.total_mujeres }}</div>
+    </div>
+
+  </div>
+
+  <!-- ======== FORMULARIO MANUAL ======== -->
+  <div class="formulario">
+
+    <h4>Registro Manual</h4>
+
+    <label>N° D100 *</label>
+    <input type="text" [(ngModel)]="d100" [disabled]="fichaGuardada" placeholder="Ej. 987654321">
+
+    <label>Clasificación CSE *</label>
+    <select [(ngModel)]="cse" [disabled]="fichaGuardada">
+      <option value="">Seleccione...</option>
+      <option value="NO POBRE">No Pobre</option>
+      <option value="POBRE">Pobre</option>
+      <option value="POBRE EXTREMO">Pobre Extremo</option>
+    </select>
+
+    <!-- Boton Guardar -->
+    <button 
+      class="btn-guardar"
+      *ngIf="!fichaGuardada"
+      (click)="guardarFicha()">
+      Guardar Ficha
+    </button>
+
+    <!-- Si ya guardó -->
+    <p class="guardado" *ngIf="fichaGuardada">✔ Ficha guardada</p>
+
+    <!-- Boton siguiente -->
+    <button 
+      class="btn-siguiente"
+      *ngIf="fichaGuardada && indiceActual < fichas.length - 1"
+      (click)="siguienteFicha()">
+
+      Siguiente Ficha →
+    </button>
+
+  </div>
+
+</div>

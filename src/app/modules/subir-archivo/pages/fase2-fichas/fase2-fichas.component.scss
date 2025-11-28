@@ -1,0 +1,61 @@
+.contenedor-fase2 {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.sub {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.ficha-card {
+  background: #f9fafc;
+  padding: 1.2rem;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+.row {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.formulario {
+  margin-bottom: 2rem;
+}
+
+input, select {
+  width: 100%;
+  padding: .5rem .8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+
+.btn-guardar {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: .7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-siguiente {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: .7rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.guardado {
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}

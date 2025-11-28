@@ -1,55 +1,30 @@
-<div class="upload-container">
-  <!-- 🔹 Sección 1: Subir archivo -->
-    <h5>Subir Archivo .DAT</h5>
-    <div
-        class="drop-zone"
-        (drop)="onDrop($event)"
-        (dragover)="onDragOver($event)"
-        >
-        <i class="bi bi-cloud-arrow-up"></i>
-        <p>Arrastra y suelta tu archivo aquí, o</p>
-        <label class="btn-select">
-          Seleccionar Archivo
-          <input type="file" accept=".dat" hidden (change)="onFileSelected($event)" />
-        </label>
-        <p class="archivo" *ngIf="archivo">📁 {{ archivo.name }}</p>
+<div class="container-main">
 
-    </div>
+  <!-- ========================================= -->
+  <!-- FASE 1: SUBIR ARCHIVO                    -->
+  <!-- ========================================= -->
+  <app-fase1-upload 
+      *ngIf="faseActual === 1"
+      (archivoProcesado)="irAFase2($event)">
+  </app-fase1-upload>
 
-  
-    <!--  Sección 2: Registro manual -->
-  <div class="manual-section">
-    <h5>Registro Manual de CSE</h5>
+  <!-- ========================================= -->
+  <!-- FASE 2: COMPLETAR FICHAS                 -->
+  <!-- ========================================= -->
+  <app-fase2-fichas
+      *ngIf="faseActual === 2"
+      [fichas]="fichas"
+      (fichasCompletadas)="irAFase3()">
+  </app-fase2-fichas>
 
-    <div class="form-row">
-          <div class="form-group">
-          <label>N° FSU</label>
-          <input type="text" [(ngModel)]="fsu" class="form-control" placeholder="Ej. 123456789" />
-          </div>
+  <!-- ========================================= -->
+  <!-- FASE 3: FINALIZAR PROCESO                -->
+  <!-- ========================================= -->
+  <app-fase3-finalizar
+      *ngIf="faseActual === 3"
+      [loteId]="loteId"
+      (procesoFinalizado)="reiniciarProceso()">
+  </app-fase3-finalizar>
 
-          <div class="form-group">
-          <label>N° D100</label>
-          <input type="text" [(ngModel)]="d100" class="form-control" placeholder="Ej. 987654321" />
-          </div>
-    </div>
-
-    <div class="form-group">
-          <label>Clasificación CSE</label>
-          <select [(ngModel)]="clasificacion" class="form-select">
-            <option value="Pobre Extremo">Pobre Extremo</option>
-            <option value="Pobre">Pobre</option>
-            <option value="No Pobre">No Pobre</option>
-          </select>
-    </div>
-
-    <div class="btn-row">
-      <button type="button" class="btn-secondary" (click)="guardarBorrador()">Guardar Borrador</button>
-      <button type="button" class="btn-primary" (click)="procesarArchivo()">Importar y Procesar</button>
-    </div>
- 
-</div>
-
-  <!--  Mensaje dinámico -->
-  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
 
 </div>
