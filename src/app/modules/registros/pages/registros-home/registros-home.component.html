@@ -1,4 +1,549 @@
-<div class="text-center p-5">
-  <h1>📊 Registros y Reportes</h1>
-  <p>Aquí podrás visualizar los registros procesados y generar reportes.</p>
+<div class="contenedor-registros">
+
+  <h2 class="titulo">Lista de Registros</h2>
+
+  <!-- Indicadores -->
+  <p *ngIf="cargando" class="loading">Cargando registros...</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
+
+  <!-- TABLA -->
+  <table class="tabla-registros" *ngIf="!cargando && registros.length > 0">
+    <thead>
+      <tr>
+        <th>FSU</th>
+        <th>Informante</th>
+        <th>D100</th>
+        <th>Condición</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of registros">
+        <td>{{ item.numero_fsu }}</td>
+        <td class="texto-izquierda">{{ item.informante }}</td>
+        <td>{{ item.codigo_D100 }}</td>
+        <td>{{ item.nivel_socioeconomico }}</td>
+        <td>
+          <button class="btn-detalle" (click)="verDetalle(item)">
+            Ver Detalle
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && registros.length === 0" class="sin-registros">
+    No hay registros cargados.
+  </p>
+
 </div>
+
+
+
+<!-- ======================================================= -->
+<!--                     MODAL COMPLETO                      -->
+<!-- ======================================================= -->
+<div class="modal-overlay" *ngIf="mostrarModal">
+  <div class="modal-content">
+
+    <button class="modal-close" (click)="cerrarModal()">✖</button>
+
+    <h2 class="modal-title">
+      Ficha completa – FSU {{ fichaSeleccionadaFSU }}
+    </h2>
+
+    <p *ngIf="cargandoDetalle">Cargando información...</p>
+    <p *ngIf="errorDetalle" class="error">{{ errorDetalle }}</p>
+
+    <div *ngIf="!cargandoDetalle && fichaDetalle">
+
+
+      <!-- =========================== -->
+      <!--      DATOS GENERALES        -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Datos Generales</h3>
+
+        <div class="grid">
+          <div><strong>FSU:</strong> {{ fichaDetalle.numero_fsu }}</div>
+          <div><strong>S100:</strong> {{ fichaDetalle.numero_s100 }}</div>
+
+          <div><strong>Hogar:</strong> {{ fichaDetalle.hogar }}</div>
+          <div><strong>N° de Hogar:</strong> {{ fichaDetalle.nro_hogar }}</div>
+
+          <div><strong>Informante:</strong> {{ fichaDetalle.informante }}</div>
+          <div><strong>N° Orden:</strong> {{ fichaDetalle.nro_orden }}</div>
+
+          <div><strong>Teléfono 1:</strong> {{ fichaDetalle.telefono1 }}</div>
+          <div><strong>Teléfono 2:</strong> {{ fichaDetalle.telefono2 }}</div>
+
+          <div><strong>Reside permanente:</strong> {{ fichaDetalle.reside_permanente }}</div>
+
+          <div><strong>Fecha digitación:</strong> {{ fichaDetalle.fecha_digitacion }}</div>
+          <div><strong>Hora digitación:</strong> {{ fichaDetalle.hora_digitacion }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--       UBICACIÓN             -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Ubicación Geográfica</h3>
+
+        <div class="grid">
+          <div><strong>Cód. Departamento:</strong> {{ fichaDetalle.cod_departamento }}</div>
+          <div><strong>Departamento:</strong> {{ fichaDetalle.departamento }}</div>
+
+          <div><strong>Cód. Provincia:</strong> {{ fichaDetalle.cod_provincia }}</div>
+          <div><strong>Provincia:</strong> {{ fichaDetalle.provincia }}</div>
+
+          <div><strong>Cód. Distrito:</strong> {{ fichaDetalle.cod_distrito }}</div>
+          <div><strong>Distrito:</strong> {{ fichaDetalle.distrito }}</div>
+
+          <div><strong>Centro poblado:</strong> {{ fichaDetalle.centro_poblado }}</div>
+          <div><strong>Código CP:</strong> {{ fichaDetalle.cod_centro_poblado }}</div>
+          <div><strong>Categoría CP:</strong> {{ fichaDetalle.categoria_centro_poblado }}</div>
+
+          <div><strong>Núcleo urbano:</strong> {{ fichaDetalle.nucleo_urbano }}</div>
+          <div><strong>Categoría NU:</strong> {{ fichaDetalle.cat_nuclo_urbano }}</div>
+
+          <div><strong>N° Zona:</strong> {{ fichaDetalle.nro_zona }}</div>
+          <div><strong>N° Manzana:</strong> {{ fichaDetalle.nro_manzana }}</div>
+
+          <div><strong>Conglomerado:</strong> {{ fichaDetalle.nro_conglomerado }}</div>
+          <div><strong>Frente manzana:</strong> {{ fichaDetalle.nro_frente_manzana }}</div>
+          <div><strong>N° Vivienda:</strong> {{ fichaDetalle.nro_vivienda }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--         DIRECCIÓN           -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Dirección</h3>
+
+        <div class="grid">
+          <div><strong>Tipo de vía:</strong> {{ fichaDetalle.tipo_via }}</div>
+          <div><strong>Nombre vía:</strong> {{ fichaDetalle.nombre_via }}</div>
+          <div><strong>N° Puerta:</strong> {{ fichaDetalle.num_puerta }}</div>
+
+          <div><strong>Piso:</strong> {{ fichaDetalle.piso }}</div>
+          <div><strong>Interior:</strong> {{ fichaDetalle.interior }}</div>
+          <div><strong>Block:</strong> {{ fichaDetalle.block }}</div>
+
+          <div><strong>Mz:</strong> {{ fichaDetalle.mz }}</div>
+          <div><strong>Lote:</strong> {{ fichaDetalle.lote }}</div>
+          <div><strong>Km:</strong> {{ fichaDetalle.km }}</div>
+          <div><strong>Parcela:</strong> {{ fichaDetalle.parcela }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--     RESPONSABLES           -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Responsables</h3>
+
+        <div class="grid">
+          <div><strong>Tipo doc responsable:</strong> {{ fichaDetalle.tipo_doc_responsable }}</div>
+          <div><strong>N° doc responsable:</strong> {{ fichaDetalle.nro_doc_responsable }}</div>
+
+          <div><strong>Empadronador:</strong>
+            {{ fichaDetalle.nombre_empadronador }}
+            {{ fichaDetalle.apellido_paterno_empadronador }}
+            {{ fichaDetalle.apellido_materno_empadronador }}
+          </div>
+
+          <div><strong>Digitador:</strong>
+            {{ fichaDetalle.nombre_digitador }}
+            {{ fichaDetalle.apellido_paterno_digitador }}
+            {{ fichaDetalle.apellido_materno_digitador }}
+          </div>
+
+          <div><strong>N° doc digitador:</strong> {{ fichaDetalle.nro_doc_digitador }}</div>
+
+          <div><strong>Firma informante (campo 1):</strong> {{ fichaDetalle.firma_informante1 }}</div>
+          <div><strong>Motivo no firma 1:</strong> {{ fichaDetalle.motivo_no_firma1 }}</div>
+
+          <div><strong>Firma informante:</strong> {{ fichaDetalle.firma_informante }}</div>
+          <div><strong>Motivo no firma informante:</strong> {{ fichaDetalle.motivo_no_firma_informante }}</div>
+
+          <div><strong>Firma digitador:</strong> {{ fichaDetalle.firma_digitador }}</div>
+          <div><strong>Motivo no firma digitador:</strong> {{ fichaDetalle.motivo_no_firma_digitador }}</div>
+        </div>
+      </div>
+
+
+
+
+      <!-- =========================== -->
+      <!--          VIVIENDA           -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Vivienda</h3>
+
+        <div class="grid">
+          <div><strong>Tipo vivienda:</strong> {{ fichaDetalle.tipo_vivienda }}</div>
+          <div><strong>Condición vivienda:</strong> {{ fichaDetalle.condicion_vivienda }}</div>
+          <div><strong>Material paredes:</strong> {{ fichaDetalle.material_paredes }}</div>
+          <div><strong>Material techo:</strong> {{ fichaDetalle.material_techo }}</div>
+          <div><strong>Material piso:</strong> {{ fichaDetalle.material_piso }}</div>
+          <div><strong>Color vivienda:</strong> {{ fichaDetalle.color_vivienda }}</div>
+          <div><strong>N° pisos:</strong> {{ fichaDetalle.nro_pisos }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--        SERVICIOS            -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Servicios del Hogar</h3>
+
+        <div class="grid">
+          <div><strong>Abastecimiento agua:</strong> {{ fichaDetalle.abastecimiento_agua }}</div>
+          <div><strong>Servicio higiénico:</strong> {{ fichaDetalle.servicio_higienico }}</div>
+          <div><strong>Alumbrado:</strong> {{ fichaDetalle.tipo_alumbrado }}</div>
+          <div><strong>Combustible cocina:</strong> {{ fichaDetalle.combustible_cocina }}</div>
+          <div><strong>N° Habitaciones:</strong> {{ fichaDetalle.nro_habitaciones }}</div>
+
+          <div><strong>Horas capital:</strong> {{ fichaDetalle.horas_capital }}</div>
+          <div><strong>Horas exactas:</strong> {{ fichaDetalle.horas_exactas }}</div>
+
+          <div><strong>Suministro luz/agua:</strong> {{ fichaDetalle.suministro_luz_agua }}</div>
+          <div><strong>N° Suministro:</strong> {{ fichaDetalle.numero_suministro }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--     BIENES DEL HOGAR        -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Bienes del Hogar</h3>
+
+        <div class="grid">
+          <div><strong>Equipo sonido:</strong> {{ fichaDetalle.bienes_equipo_sonido }}</div>
+          <div><strong>Televisor:</strong> {{ fichaDetalle.bienes_televisor }}</div>
+          <div><strong>DVD:</strong> {{ fichaDetalle.bienes_dvd }}</div>
+          <div><strong>Licuadora:</strong> {{ fichaDetalle.bienes_licuadora }}</div>
+          <div><strong>Refrigerador:</strong> {{ fichaDetalle.bienes_refrigerador }}</div>
+
+          <div><strong>Cocina gas:</strong> {{ fichaDetalle.bienes_cocina_gas }}</div>
+          <div><strong>Teléfono fijo:</strong> {{ fichaDetalle.bienes_telefono_fijo }}</div>
+          <div><strong>Plancha:</strong> {{ fichaDetalle.bienes_plancha }}</div>
+          <div><strong>Lavadora:</strong> {{ fichaDetalle.bienes_lavadora }}</div>
+
+          <div><strong>Computadora:</strong> {{ fichaDetalle.bienes_computadora }}</div>
+          <div><strong>Microondas:</strong> {{ fichaDetalle.bienes_microondas }}</div>
+
+          <div><strong>Internet:</strong> {{ fichaDetalle.bienes_internet }}</div>
+          <div><strong>Cable:</strong> {{ fichaDetalle.bienes_cable }}</div>
+          <div><strong>Celular:</strong> {{ fichaDetalle.bienes_celular }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--         VISITAS             -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Visitas</h3>
+
+        <div class="grid">
+          <div><strong>Visita 1 empadronador:</strong>
+            {{ fichaDetalle.visita1_empadronador_resultado }} –
+            {{ fichaDetalle.visita1_empadronador_fecha }}
+          </div>
+
+          <div><strong>Visita 2 empadronador:</strong>
+            {{ fichaDetalle.visita2_empadronador_resultado }}</div>
+
+          <div><strong>Visita 3 empadronador:</strong>
+            {{ fichaDetalle.visita3_empadronador_resultado }}</div>
+
+          <div><strong>Visita 1 jefe brigada:</strong>
+            {{ fichaDetalle.visita1_jefebrigada_resultado }}</div>
+
+          <div><strong>Visita 1 revisor:</strong>
+            {{ fichaDetalle.visita1_revisor_resultado }}</div>
+
+          <div><strong>Visita 2 revisor:</strong>
+            {{ fichaDetalle.visita2_revisor_resultado }}</div>
+
+          <div><strong>Visita 3 revisor:</strong>
+            {{ fichaDetalle.visita3_revisor_resultado }}</div>
+
+          <div><strong>Resultado final fecha:</strong>
+            {{ fichaDetalle.resultado_final_fecha }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--        DATOS HOGAR          -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Datos del Hogar</h3>
+
+        <div class="grid">
+          <div><strong>Total personas:</strong> {{ fichaDetalle.total_personas }}</div>
+          <div><strong>Total hombres:</strong> {{ fichaDetalle.total_hombres }}</div>
+          <div><strong>Total mujeres:</strong> {{ fichaDetalle.total_mujeres }}</div>
+
+          <div><strong>Código D100:</strong> {{ fichaDetalle.codigo_D100 }}</div>
+          <div><strong>Nivel socioeconómico:</strong> {{ fichaDetalle.nivel_socioeconomico }}</div>
+        </div>
+      </div>
+
+
+
+      <!-- =========================== -->
+      <!--       TABLA INTEGRANTES     -->
+      <!-- =========================== -->
+      <div class="modal-section">
+        <h3>Integrantes del Hogar</h3>
+
+        <table class="tabla-integrantes">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Apellido P.</th>
+              <th>Apellido M.</th>
+              <th>Nombres</th>
+              <th>Edad</th>
+              <th>Sexo</th>
+              <th>Documento</th>
+              <th>Parentesco</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ng-container *ngFor="let p of fichaDetalle.integrantes; let i = index">
+
+              <!-- Fila principal -->
+              <tr class="integrante-row" (click)="toggleIntegrante(i)">
+                <td class="toggle-cell">
+                  <span class="arrow" [class.open]="p._open">▸</span>
+                </td>
+                <td>{{ p.apellido_paterno }}</td>
+                <td>{{ p.apellido_materno }}</td>
+                <td>{{ p.nombres }}</td>
+                <td>{{ p.edad }}</td>
+                <td>{{ p.sexo }}</td>
+                <td>{{ p.nro_documento }}</td>
+                <td>{{ p.parentesco }}</td>
+              </tr>
+
+              <!-- Panel Detalle -->
+              <tr *ngIf="p._open">
+                <td colspan="8" class="integrante-detalle">
+
+                  <div class="integrante-grid">
+
+                    <div class="integrante-item">
+                      <strong>Código</strong>
+                      <span>{{ p.codigo }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>FSU</strong>
+                      <span>{{ p.numero_fsu }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Fecha nacimiento</strong>
+                      <span>{{ p.fecha_nacimiento }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Meses</strong>
+                      <span>{{ p.meses }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Tipo documento</strong>
+                      <span>{{ p.tipo_documento }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>N° documento</strong>
+                      <span>{{ p.nro_documento }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Núcleo familiar</strong>
+                      <span>{{ p.nro_nucleo_familiar }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Estado civil</strong>
+                      <span>{{ p.estado_civil }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Gestante</strong>
+                      <span>{{ p.gestante }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Idioma inicial</strong>
+                      <span>{{ p.idioma_inicial }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Sabe leer/escribir</strong>
+                      <span>{{ p.sabe_leer_escribir }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Nivel educativo</strong>
+                      <span>{{ p.nivel_educativo }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Último grado aprobado</strong>
+                      <span>{{ p.ultimo_grado_aprobado }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Ocupación</strong>
+                      <span>{{ p.ocupacion_ult_mes }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Sector desempeña</strong>
+                      <span>{{ p.sector_desempena }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Presenta discapacidad</strong>
+                      <span>{{ p.presenta_discapacidad }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Discap. visual</strong>
+                      <span>{{ p.discapacidad_visual }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Discap. auditiva</strong>
+                      <span>{{ p.discapacidad_auditiva }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Discap. habla</strong>
+                      <span>{{ p.discapacidad_habla }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Discap. motora</strong>
+                      <span>{{ p.discapacidad_motora }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Discap. mental</strong>
+                      <span>{{ p.discapacidad_mental }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Tiene seguro</strong>
+                      <span>{{ p.tiene_seguro }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>ESSALUD</strong>
+                      <span>{{ p.seguro_essalud }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>FFAA/PNP</strong>
+                      <span>{{ p.seguro_ffaa_pnp }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>SIS</strong>
+                      <span>{{ p.seguro_sis }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Privado</strong>
+                      <span>{{ p.seguro_privado }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Otro seguro</strong>
+                      <span>{{ p.seguro_otro }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Vaso de leche</strong>
+                      <span>{{ p.prog_vaso_leche }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Comedor popular</strong>
+                      <span>{{ p.prog_comedor_popular }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Desayuno/Almuerzo</strong>
+                      <span>{{ p.prog_desayuno_almuerzo }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>PACFO</strong>
+                      <span>{{ p.prog_pacfo }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>PANF</strong>
+                      <span>{{ p.prog_panf }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Juntos</strong>
+                      <span>{{ p.prog_juntos }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Techo propio</strong>
+                      <span>{{ p.prog_techo_propio }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Pensión 65</strong>
+                      <span>{{ p.prog_pension65 }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Cuna Más</strong>
+                      <span>{{ p.prog_cuna_mas }}</span>
+                    </div>
+
+                    <div class="integrante-item">
+                      <strong>Otro programa</strong>
+                      <span>{{ p.prog_otro }}</span>
+                    </div>
+
+                  </div>
+
+                </td>
+              </tr>
+
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+

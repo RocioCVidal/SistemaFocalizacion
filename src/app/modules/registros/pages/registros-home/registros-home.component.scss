@@ -1,0 +1,307 @@
+/* ======================================= */
+/*              ESTILOS BASE               */
+/* ======================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.contenedor-registros {
+  padding: 25px 40px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.titulo {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #1b1b1b;
+}
+
+.loading, .sin-registros {
+  color: #555;
+}
+
+.error {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+
+
+/* ======================================= */
+/*               TABLA PRINCIPAL           */
+/* ======================================= */
+
+.tabla-registros {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 15px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  font-size: 15px;
+}
+
+.tabla-registros thead {
+  background: #f4f6f8;
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-registros th,
+.tabla-registros td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabla-registros tbody tr:hover {
+  background: #f9fbff;
+}
+
+.btn-detalle {
+  padding: 7px 14px;
+  background-color: #007bff;
+  color: white;
+  font-size: 13px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-detalle:hover {
+  background-color: #0056b3;
+}
+
+
+
+/* ======================================= */
+/*                 MODAL                   */
+/* ======================================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+  z-index: 900;
+}
+
+.modal-content {
+  width: 92%;
+  max-width: 1200px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 14px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  animation: modalFadeIn 0.25s ease-in-out;
+}
+
+/* Animación modal */
+@keyframes modalFadeIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-close:hover {
+  background: #d63030;
+}
+
+.modal-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+}
+
+
+
+/* ======================================= */
+/*                 SECCIONES               */
+/* ======================================= */
+
+.modal-section {
+  background: #fdfdfd;
+  border-left: 4px solid #007bff;
+  padding: 22px 22px;
+  border-radius: 8px;
+  margin-bottom: 28px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.modal-section h3 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #007bff;
+}
+
+
+
+/* ======================================= */
+/*                   GRID                  */
+/* ======================================= */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px 25px;
+}
+
+.grid div {
+  padding: 8px 0;
+  font-size: 15px;
+  color: #1a1a1a;
+  line-height: 1.45;
+}
+
+.grid strong {
+  color: #000;
+}
+
+
+
+/* ======================================= */
+/*          TABLA DE INTEGRANTES          */
+/* ======================================= */
+
+.tabla-integrantes {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.tabla-integrantes thead {
+  background: #007bff;
+  color: white;
+}
+
+.tabla-integrantes th,
+.tabla-integrantes td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e3e3e3;
+  font-size: 14px;
+}
+
+.tabla-integrantes tbody tr:nth-child(even) {
+  background: #f6f9ff;
+}
+
+.tabla-integrantes tbody tr:hover {
+  background: #e8f1ff;
+}
+
+
+
+ /* =========================================================== */
+ /*      PANEL DETALLE DEL ACORDEÓN — DISEÑO PROFESIONAL       */
+ /* =========================================================== */
+
+.integrante-row {
+  transition: background-color 0.25s ease;
+}
+
+.integrante-detalle {
+  background: #f3f7ff;
+  padding: 28px;
+  border-left: 4px solid #007bff;
+  border-radius: 0 0 10px 10px;
+  margin-top: -3px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.06);
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* GRID INTERNO DE INTEGRANTE */
+.integrante-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px 30px;
+}
+
+/* Tarjetas individuales */
+.integrante-item {
+  background: white;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #d9e4ff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.integrante-item strong {
+  display: block;
+  font-size: 13px;
+  color: #0056d2;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.integrante-item span {
+  font-size: 14.5px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Encabezado de sección */
+.integrante-seccion {
+  grid-column: 1 / -1;
+  margin-top: 12px;
+  margin-bottom: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #004bb8;
+  text-transform: uppercase;
+}
+
+
+
+/* ======================================= */
+/*           SCROLL DEL MODAL             */
+/* ======================================= */
+
+.modal-content::-webkit-scrollbar {
+  width: 12px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #9b9b9b;
+}

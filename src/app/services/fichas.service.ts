@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 /**
  * Interfaz Ficha usada por todas las fases del proceso.
- * Esta es una versión reducida con los campos esenciales
- * que mostramos en el frontend.
  */
 export interface Ficha {
   numero_fsu: string;
@@ -21,7 +21,7 @@ export interface Ficha {
   total_hombres: number;
   total_mujeres: number;
 
-  // Campos agregados durante el proceso
+  // Datos llenados en Fase 2
   d100?: string;
   cse?: string;
   completada?: boolean;
@@ -32,6 +32,18 @@ export interface Ficha {
 })
 export class FichasService {
 
-  constructor() {}
+  private apiUrl = 'http://127.0.0.1:8000/api/v1';
 
+  constructor(private http: HttpClient) {}
+
+  /**
+   * Guarda en el backend la información de una ficha completada.
+   */
+  guardarFicha(data: {
+    numero_fsu: string;
+    d100: string;
+    cse: string;
+  }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/guardar-ficha`, data);
+  }
 }

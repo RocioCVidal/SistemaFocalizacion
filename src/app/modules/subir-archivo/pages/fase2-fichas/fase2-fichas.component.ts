@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Ficha } from '../../../../services/fichas.service';
+import { Ficha, FichasService } from '../../../../services/fichas.service';
 
 @Component({
   selector: 'app-fase2-fichas',
@@ -13,34 +13,56 @@ export class Fase2FichasComponent {
 
   indiceActual = 0;
 
-  // Campos del formulario
   d100 = '';
   cse = '';
-
   fichaGuardada = false;
 
-  constructor() {}
+  constructor(private fichasService: FichasService) {}
 
   get fichaActual(): Ficha {
     return this.fichas[this.indiceActual];
   }
 
+  validarD100(valor: string): boolean {
+    return /^[0-9]{7}$/.test(valor);
+  }
+
   guardarFicha() {
+
     if (!this.d100 || !this.cse) {
       alert("Todos los campos son obligatorios.");
       return;
     }
 
-    // Guardamos datos en la ficha actual
-    (this.fichaActual as any).d100 = this.d100;
-    (this.fichaActual as any).cse = this.cse;
-    (this.fichaActual as any).completada = true;
+    if (!this.validarD100(this.d100)) {
+      alert("El D100 debe tener exactamente 7 dígitos numéricos.");
+      return;
+    }
 
-    this.fichaGuardada = true;
+    const payload = {
+      numero_fsu: this.fichaActual.numero_fsu,
+      d100: this.d100,
+      cse: this.cse
+    };
 
-    // 📌 Si esta es la última ficha → pasamos a Fase 3 automáticamente
+    // Llamada al backend para guardar en SQL Server
+    this.fichasService.guardarFicha(payload).subscribe({
+      next: () => {
+        // Guardamos datos localmente
+        this.fichaActual.d100 = this.d100;
+        this.fichaActual.cse = this.cse;
+        this.fichaActual.completada = true;
+
+        this.fichaGuardada = true;
+      },
+      error: (err) => {
+        console.error(err);
+        alert("Error al guardar en la base de datos.");
+      }
+    });
+
+    // Si es la última ficha, pasamos a la fase final
     const esUltima = this.indiceActual === this.fichas.length - 1;
-
     if (esUltima) {
       this.fichasCompletadas.emit();
     }
@@ -53,8 +75,6 @@ export class Fase2FichasComponent {
 
     this.d100 = '';
     this.cse = '';
-
     this.fichaGuardada = false;
   }
-
 }

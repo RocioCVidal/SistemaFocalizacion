@@ -1,12 +1,11 @@
 <div class="contenedor-fase2">
 
-  <!-- Título -->
   <h3>Completar Información de Fichas</h3>
   <p class="sub">
     Ficha {{ indiceActual + 1 }} de {{ fichas.length }}
   </p>
 
-  <!-- ======== DATOS DE LA FICHA ======== -->
+  <!-- TARJETA DE INFORMACIÓN -->
   <div class="ficha-card">
 
     <h4>Información de la Ficha</h4>
@@ -31,13 +30,13 @@
 
   </div>
 
-  <!-- ======== FORMULARIO MANUAL ======== -->
+  <!-- FORMULARIO -->
   <div class="formulario">
 
     <h4>Registro Manual</h4>
 
     <label>N° D100 *</label>
-    <input type="text" [(ngModel)]="d100" [disabled]="fichaGuardada" placeholder="Ej. 987654321">
+    <input type="text" [(ngModel)]="d100" [disabled]="fichaGuardada" placeholder="Ej. 1234567">
 
     <label>Clasificación CSE *</label>
     <select [(ngModel)]="cse" [disabled]="fichaGuardada">
@@ -47,7 +46,6 @@
       <option value="POBRE EXTREMO">Pobre Extremo</option>
     </select>
 
-    <!-- Boton Guardar -->
     <button 
       class="btn-guardar"
       *ngIf="!fichaGuardada"
@@ -55,15 +53,12 @@
       Guardar Ficha
     </button>
 
-    <!-- Si ya guardó -->
     <p class="guardado" *ngIf="fichaGuardada">✔ Ficha guardada</p>
 
-    <!-- Boton siguiente -->
     <button 
       class="btn-siguiente"
       *ngIf="fichaGuardada && indiceActual < fichas.length - 1"
       (click)="siguienteFicha()">
-
       Siguiente Ficha →
     </button>
 
