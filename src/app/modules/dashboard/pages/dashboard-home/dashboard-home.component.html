@@ -1,87 +1,62 @@
-<!-- ===== FILTROS ===== -->
-<section class="filters shadow-sm bg-white rounded p-3 mb-4">
-  <h6 class="fw-semibold mb-3">Filtros</h6>
+<div class="dashboard-wrapper">
 
-        <div class="filters-row d-flex flex-wrap gap-3 align-items-center">
-          <!-- Fecha -->
-          <div class="filter d-flex align-items-center gap-2">
-            <i class="fa-regular fa-calendar text-primary"></i>
-            <input type="date" class="form-control form-control-lg" />
-            <span class="fw-semibold text-muted">—</span>
-            <input type="date" class="form-control form-control-lg" />
-          </div>
+  <h2 class="titulo">Dashboard de Focalización de Hogares</h2>
 
-          <!-- Distrito -->
-          <select class="form-select form-select-lg">
-            <option selected>Todos los Distritos</option>
-            <option>Trujillo</option>
-            <option>El Porvenir</option>
-            <option>Florencia de Mora</option>
-          </select>
+  <!-- Mensajes de estado -->
+  <p *ngIf="cargando" class="msg-info">Cargando información del dashboard...</p>
+  <p *ngIf="error" class="msg-error">{{ error }}</p>
 
-          <!-- Estado -->
-          <select class="form-select form-select-lg">
-            <option selected>Todos los Estados</option>
-            <option>Pobre Extremo</option>
-            <option>Pobre</option>
-            <option>No Pobre</option>
-          </select>
-        </div>
-</section>
-
-<!-- ===== KPI ===== -->
-<section class="kpi-section">
-    <h6>Indicadores KPI</h6>
-
-        <div class="kpi-grid" *ngIf="!cargando">
-            <div class="kpi-card total">
-              <h5>Total de hogares</h5>
-              <h3>{{ kpis.totalHogares | number }}</h3>
-              <p>Hogares registrados en el sistema</p>
-            </div>
-
-            <div class="kpi-card pobre-extremo">
-              <h5>% Pobre Extremo</h5>
-              <h3>{{ kpis.pobreExtremo }}%</h3>
-              <p>De hogares clasificados como Pobre Extremo</p>
-            </div>
-
-            <div class="kpi-card pobre">
-              <h5>% Pobre</h5>
-              <h3>{{ kpis.pobre }}%</h3>
-              <p>De hogares clasificados como Pobre</p>
-            </div>
-
-            <div class="kpi-card no-pobre">
-              <h5>% No Pobre</h5>
-              <h3>{{ kpis.noPobre }}%</h3>
-              <p>De hogares clasificados como No Pobre</p>
-            </div>
-        </div>
-
-</section>
-
-
-<!-- ===GRÁFICOS======== -->
-<div class="charts-container">
-
-    <!--  CSE y Distritos -->
-    <div class="charts-row">
-        <div class="chart-card">
-        <canvas id="chartCSE"></canvas>
-        </div>
-
-        <div class="chart-card">
-        <canvas id="chartDistrito"></canvas>
-        </div>
+  <!-- TARJETAS KPI -->
+  <div class="kpi-grid" *ngIf="!cargando">
+    <div class="kpi-card">
+      <p class="kpi-title">Total de hogares</p>
+      <p class="kpi-value">{{ totalHogares }}</p>
+      <p class="kpi-sub">Hogares registrados en el sistema</p>
     </div>
 
-    <!-- : Programas Sociales -->
-      <div class="chart-card chart-programas">
-      <canvas id="chartProgramas"></canvas>
-      </div>
+    <div class="kpi-card">
+      <p class="kpi-title">% Pobre Extremo</p>
+      <p class="kpi-value accent-red">{{ redondear(porcentajePobreExtremo) }}%</p>
+      <p class="kpi-sub">Hogares clasificados como Pobre Extremo</p>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-title">% Pobre</p>
+      <p class="kpi-value accent-orange">{{ redondear(porcentajePobre) }}%</p>
+      <p class="kpi-sub">Hogares clasificados como Pobre</p>
+    </div>
+
+    <div class="kpi-card">
+      <p class="kpi-title">% No Pobre</p>
+      <p class="kpi-value accent-green">{{ redondear(porcentajeNoPobre) }}%</p>
+      <p class="kpi-sub">Hogares clasificados como No Pobre</p>
+    </div>
+  </div>
+
+  <!-- FILA DE GRÁFICOS 1 -->
+  <div class="charts-row" *ngIf="!cargando">
+    <div class="chart-card">
+      <p class="chart-title">Distribución por Nivel Socioeconómico</p>
+      <canvas #cseChartCanvas></canvas>
+    </div>
+
+    <div class="chart-card">
+      <p class="chart-title">Personas por Sexo</p>
+      <canvas #sexoChartCanvas></canvas>
+    </div>
+  </div>
+
+  <!-- FILA DE GRÁFICOS 2 -->
+  <div class="charts-row" *ngIf="!cargando">
+    <div class="chart-card">
+      <p class="chart-title">Acceso a Servicios Básicos</p>
+      <canvas #serviciosChartCanvas></canvas>
+    </div>
+
+    <div class="chart-card">
+      <p class="chart-title">Beneficiarios por Programa Social</p>
+      <canvas #programasChartCanvas></canvas>
+    </div>
+  </div>
 
 </div>
-
-
-
